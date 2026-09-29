@@ -1,20 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Учет успеваемости студентов | ИС «ЕдуСтат»</title>
+  <meta name="description" content="Информационная система учета успеваемости студентов. Электронный журнал, справочники, личный кабинет, ведомости.">
+  
+  <!-- Шрифт Montserrat из дизайн-системы -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Стили -->
+  <link rel="stylesheet" href="/src/styles/main.scss">
 </head>
 <body>
+  <!-- SVG фильтры оптического искажения "Жидкое стекло" (Liquid Glass) из Roblox-master -->
+  <svg width="0" height="0" style="position: absolute; pointer-events: none;" aria-hidden="true">
+    <defs>
+      <!-- Фильтр для шапки (Header) -->
+      <filter id="liquid-glass-header" x="-50%" y="-50%" width="200%" height="200%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.015 0.015" numOctaves="3" seed="7" result="turbulence"/>
+        <feGaussianBlur in="turbulence" stdDeviation="1" result="smoothNoise"/>
+        <feDisplacementMap in="SourceGraphic" in2="smoothNoise" scale="8" xChannelSelector="R" yChannelSelector="G" result="distorted"/>
+        <feGaussianBlur in="distorted" stdDeviation="0.2"/>
+      </filter>
 
-<main>
+      <!-- Фильтр для карточек и панелей (Cards, Datatables, Widgets) -->
+      <filter id="liquid-glass-card" x="-50%" y="-50%" width="200%" height="200%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.012" numOctaves="3" seed="5" result="turbulence"/>
+        <feGaussianBlur in="turbulence" stdDeviation="1.5" result="smoothNoise"/>
+        <feDisplacementMap in="SourceGraphic" in2="smoothNoise" scale="9" xChannelSelector="R" yChannelSelector="G" result="distorted"/>
+        <feGaussianBlur in="distorted" stdDeviation="0.25"/>
+      </filter>
 
-    <h2>Войдите или зарегистрируйтесь</h2>
+      <!-- Фильтр для модальных окон (Modals) -->
+      <filter id="liquid-glass-modal" x="-50%" y="-50%" width="200%" height="200%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.014 0.014" numOctaves="3" seed="9" result="turbulence"/>
+        <feGaussianBlur in="turbulence" stdDeviation="1.2" result="smoothNoise"/>
+        <feDisplacementMap in="SourceGraphic" in2="smoothNoise" scale="10" xChannelSelector="R" yChannelSelector="G" result="distorted"/>
+        <feGaussianBlur in="distorted" stdDeviation="0.3"/>
+      </filter>
+    </defs>
+  </svg>
 
-    <a href="login.html">Войти</a>
-    <a href="registration.html">Регистрация</a>
+  <!-- Декоративные световые пятна на фоне для преломления в жидком стекле -->
+  <div class="ambient-glow ambient-glow--1" aria-hidden="true"></div>
+  <div class="ambient-glow ambient-glow--2" aria-hidden="true"></div>
+  <div class="ambient-glow ambient-glow--3" aria-hidden="true"></div>
 
-</main>
-
+  <div id="app"></div>
+  <script type="module" src="/src/js/app.js"></script>
 </body>
 </html>

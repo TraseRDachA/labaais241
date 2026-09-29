@@ -1,0 +1,72 @@
+# ==========================================
+# 1. ТЗ, спецификации и драфты заданий
+# ==========================================
+task*.md
+*task*.md
+*тз*
+*ТЗ*
+*tz*
+*TZ*
+*.todo
+*.draft.md
+requirements*.md
+specifications*.md
+
+# ==========================================
+# 2. Файлы и конфигурации ИИ (AI Assistants)
+# ==========================================
+.gemini/
+.agents/
+.cursor/
+.cursorrules
+.windsurf/
+.windsurfrules
+.claude/
+.copilot/
+.ai/
+.aider*
+*.prompt
+prompt*.md
+ai-notes*
+
+# ==========================================
+# 3. Файлы сборки и фронтенд-артефакты (не нужны бэкенду)
+# ==========================================
+node_modules/
+dist/
+dist-ssr/
+.vite/
+*.local
+.cache/
+.temp/
+tmp/
+coverage/
+
+# Логи и отладочные дампы
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+.system_generated/
+
+# Файлы окружения и секреты
+.env
+.env.local
+.env.*.local
+
+# ==========================================
+# 4. Системные файлы ОС и редакторов кода
+# ==========================================
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Редакторы (VS Code, JetBrains Rider / Visual Studio)
+.idea/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates

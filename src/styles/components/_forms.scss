@@ -1,0 +1,87 @@
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+
+  &__label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--white-70);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+
+    .required {
+      color: var(--danger);
+      margin-left: 3px;
+    }
+  }
+
+  &__input,
+  &__select,
+  &__textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--grey-field);
+    border: 1px solid var(--grey-border);
+    border-radius: var(--radius-md);
+    color: var(--white-100);
+    font-size: 14px;
+    transition: all 0.25s ease;
+
+    &::placeholder {
+      color: var(--white-40);
+    }
+
+    &:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    &--error {
+      border-color: var(--danger) !important;
+      box-shadow: 0 0 12px var(--danger-glow) !important;
+    }
+  }
+
+  &__select {
+    cursor: pointer;
+
+    option {
+      background: var(--card-back);
+      color: var(--white-100);
+      padding: 10px;
+    }
+  }
+
+  &__textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+
+  &__error {
+    font-size: 11px;
+    color: var(--danger);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  &__hint {
+    font-size: 11px;
+    color: var(--white-40);
+  }
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+
+  .form-group {
+    flex: 1;
+  }
+}

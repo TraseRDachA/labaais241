@@ -1,0 +1,273 @@
+/* ========================================================
+   СВЕТЛАЯ ТЕМА (LIGHT THEME) С ЭФФЕКТОМ ФРОСТЕД ЖИДКОГО СТЕКЛА
+   ======================================================== */
+
+[data-theme="light"] {
+  --black-100: #f4f6fb;
+  --black-90: rgba(244, 246, 251, 0.95);
+  --black-80: rgba(244, 246, 251, 0.85);
+  --black-70: rgba(244, 246, 251, 0.7);
+  --black-60: rgba(244, 246, 251, 0.6);
+  --black-50: rgba(244, 246, 251, 0.5);
+  --black-light: #ffffff;
+
+  --sidebar-bg: rgba(255, 255, 255, 0.7);
+  --header-bg: rgba(255, 255, 255, 0.75);
+  --card-back: rgba(255, 255, 255, 0.65);
+  --card-back-hover: rgba(255, 255, 255, 0.9);
+  --grey-field: rgba(241, 245, 249, 0.9);
+  --grey-border: rgba(203, 213, 225, 0.75);
+  --border-active: rgba(101, 64, 251, 0.7);
+
+  /* Текстовые цвета для максимальной читаемости */
+  --white-100: #0f172a;
+  --white-90: #1e293b;
+  --white-80: #334155;
+  --white-70: #475569;
+  --white-60: #64748b;
+  --white-50: #94a3b8;
+  --white-40: #a0aec0;
+  --white-30: #cbd5e1;
+  --white-20: #e2e8f0;
+  --white-10: #f1f5f9;
+
+  --button-grey: #e2e8f0;
+  --button-grey-hover: #cbd5e1;
+
+  body {
+    background-color: #f4f6fb;
+    color: #0f172a;
+  }
+
+  /* Парящие сферы в светлой теме - яркие чистые дневные тона */
+  .ambient-dvd-orb {
+    opacity: 0.65 !important;
+    filter: blur(85px) !important;
+  }
+
+  /* Настоящее жидкое стекло (Liquid Glass) в светлой теме */
+  .app-header,
+  .app-sidebar,
+  .login-page__card,
+  .student-page__profile-card,
+  .student-page__stat-card,
+  .student-page__table-card,
+  .journal-page__selectors-bar,
+  .journal-page__meta-bar,
+  .journal-page__table-wrapper,
+  .journal-page__legend,
+  .directory-page__content,
+  .directory-page__tabs,
+  .reports-page__controls-card,
+  .reports-page__statement-sheet,
+  .reports-page__statement-info,
+  .admin-page__card,
+  .datatable__table-wrapper,
+  .modal-dialog {
+    /* Кристально-прозрачный градиент для преломления дневных сфер */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.22) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.85) !important;
+    box-shadow: 
+      inset 1.5px 1.5px 0px rgba(255, 255, 255, 0.95),
+      inset -1px -1px 0px rgba(0, 0, 0, 0.04),
+      0 12px 35px rgba(100, 116, 139, 0.12) !important;
+
+    /* Спекулярная кромка стекла */
+    &::before {
+      border: 1px solid rgba(255, 255, 255, 0.95) !important;
+      box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.8) !important;
+    }
+
+    /* Слой оптического преломления жидкого стекла */
+    &::after {
+      backdrop-filter: blur(14px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(14px) saturate(180%) !important;
+      background: rgba(255, 255, 255, 0.16) !important;
+    }
+  }
+
+  .app-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.85) !important;
+  }
+
+  .app-sidebar {
+    border-right: 1px solid rgba(255, 255, 255, 0.85) !important;
+  }
+
+  .modal-overlay {
+    background: rgba(15, 23, 42, 0.45);
+  }
+
+  /* Таблицы */
+  .datatable__table {
+    th {
+      background: rgba(241, 245, 249, 0.6) !important;
+      color: #64748b !important;
+      border-bottom-color: rgba(203, 213, 225, 0.8) !important;
+    }
+    td {
+      color: #1e293b !important;
+      border-bottom-color: rgba(226, 232, 240, 0.6) !important;
+    }
+    tbody tr:hover {
+      background-color: rgba(101, 64, 251, 0.04) !important;
+    }
+  }
+
+  .journal-page__table {
+    th {
+      background: rgba(241, 245, 249, 0.7) !important;
+      color: #64748b !important;
+      border-bottom-color: rgba(203, 213, 225, 0.8) !important;
+    }
+    td {
+      color: #1e293b !important;
+      border-bottom-color: rgba(226, 232, 240, 0.6) !important;
+    }
+    tbody tr:hover {
+      background-color: rgba(101, 64, 251, 0.04) !important;
+    }
+  }
+
+  /* Журнал оценок в светлой теме */
+  .journal-page__cell {
+    color: #1e293b;
+
+    &:hover {
+      background: rgba(101, 64, 251, 0.1) !important;
+      border-color: var(--accent) !important;
+      color: #0f172a !important;
+      box-shadow: inset 0 0 0 1px var(--accent), inset 0 0 10px rgba(101, 64, 251, 0.3) !important;
+    }
+
+    &--empty {
+      color: #94a3b8 !important;
+    }
+
+    &--score-5 {
+      color: #059669 !important;
+      background: rgba(16, 185, 129, 0.16) !important;
+    }
+
+    &--score-4 {
+      color: #2563eb !important;
+      background: rgba(37, 99, 235, 0.14) !important;
+    }
+
+    &--score-3 {
+      color: #d97706 !important;
+      background: rgba(217, 119, 6, 0.14) !important;
+    }
+
+    &--score-2 {
+      color: #dc2626 !important;
+      background: rgba(220, 38, 38, 0.16) !important;
+      border-color: rgba(220, 38, 38, 0.4) !important;
+    }
+
+    &--pass {
+      color: #059669 !important;
+      background: rgba(16, 185, 129, 0.16) !important;
+    }
+
+    &--fail {
+      color: #dc2626 !important;
+      background: rgba(220, 38, 38, 0.16) !important;
+      border-color: rgba(220, 38, 38, 0.4) !important;
+    }
+  }
+
+  .journal-page__cell-input,
+  .journal-page__cell-select {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 10px rgba(101, 64, 251, 0.25) !important;
+  }
+
+  /* Инпуты и формы */
+  .form-group__input,
+  .form-group__select,
+  .datatable__search-input,
+  .datatable__select,
+  .journal-page__selector-group select {
+    background: rgba(255, 255, 255, 0.85) !important;
+    border-color: rgba(203, 213, 225, 0.9) !important;
+    color: #0f172a !important;
+
+    &:focus {
+      border-color: var(--accent) !important;
+      box-shadow: 0 0 12px rgba(101, 64, 251, 0.25) !important;
+      background: #ffffff !important;
+    }
+  }
+
+  .app-header__demo-switcher {
+    background: rgba(255, 255, 255, 0.75) !important;
+    border-color: rgba(203, 213, 225, 0.8) !important;
+  }
+
+  .app-header__demo-switcher-btn {
+    color: #475569;
+    &:hover {
+      background: rgba(101, 64, 251, 0.1);
+      color: var(--accent);
+    }
+    &--active {
+      background: var(--accent) !important;
+      color: #ffffff !important;
+    }
+  }
+
+  .app-sidebar__link {
+    color: #475569;
+    &:hover {
+      background: rgba(101, 64, 251, 0.06);
+      color: #0f172a;
+    }
+    &--active {
+      background: rgba(101, 64, 251, 0.12) !important;
+      color: var(--accent) !important;
+    }
+  }
+
+  /* Бейджи статусов в светлой теме */
+  .badge--status-active {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #059669 !important;
+    border-color: rgba(16, 185, 129, 0.35) !important;
+  }
+
+  .badge--status-sabbatical {
+    background: rgba(245, 158, 11, 0.15) !important;
+    color: #d97706 !important;
+    border-color: rgba(245, 158, 11, 0.35) !important;
+  }
+
+  .badge--status-expelled {
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: #dc2626 !important;
+    border-color: rgba(239, 68, 68, 0.35) !important;
+  }
+
+  .badge--admitted {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #059669 !important;
+  }
+
+  .badge--not-admitted {
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: #dc2626 !important;
+  }
+
+  /* Скроллбары в светлой теме */
+  ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+  }
+}

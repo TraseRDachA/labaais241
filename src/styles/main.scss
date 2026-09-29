@@ -1,0 +1,76 @@
+@import "./variables";
+@import "./mixins";
+@import "./reset";
+
+/* Общий Layout приложения */
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  position: relative;
+  z-index: 1;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.app-body {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.app-main {
+  flex: 1;
+  padding: 32px;
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+  min-width: 0;
+  overflow-x: hidden;
+
+  @include mobile {
+    padding: 16px;
+  }
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Компоненты */
+@import "./components/button";
+@import "./components/badges";
+@import "./components/header";
+@import "./components/sidebar";
+@import "./components/datatable";
+@import "./components/modal";
+@import "./components/toast";
+@import "./components/forms";
+
+/* Страницы */
+@import "./pages/login";
+@import "./pages/directory";
+@import "./pages/journal";
+@import "./pages/student";
+@import "./pages/reports";
+@import "./pages/admin";
+
+/* Темы оформления (Светлая / Темная) */
+@import "./themes";

@@ -1,0 +1,98 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(4, 5, 8, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+
+  &--active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.modal-dialog {
+  @include liquid-glass('liquid-glass-modal', var(--radius-xl));
+  box-shadow: 
+    inset 2px 2px 0px -2px rgba(255, 255, 255, 0.35),
+    inset 0 0 3px 1px rgba(255, 255, 255, 0.2),
+    0 24px 70px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(101, 64, 251, 0.2);
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.95) translateY(10px);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+
+  .modal-overlay--active & {
+    transform: scale(1) translateY(0);
+  }
+
+  &--large {
+    max-width: 800px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white-100);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__close-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white-60);
+    transition: all 0.2s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--white-100);
+      transform: scale(1.1);
+    }
+  }
+
+  &__body {
+    padding: 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  &__footer {
+    padding: 18px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.02);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+}

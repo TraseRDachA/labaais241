@@ -1,0 +1,61 @@
+.directory-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  &__title {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--white-100);
+  }
+
+  /* Жидкое стекло для переключателя вкладок */
+  &__tabs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px;
+    @include liquid-glass('liquid-glass-subtle', var(--radius-lg));
+    width: fit-content;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  &__tab-btn {
+    padding: 8px 18px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white-60);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+
+    &:hover {
+      color: var(--white-100);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    &--active {
+      background: var(--accent);
+      color: var(--white-100);
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+  }
+
+  /* Жидкое стекло для содержимого справочников */
+  &__content {
+    @include liquid-glass('liquid-glass-card', var(--radius-xl));
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}

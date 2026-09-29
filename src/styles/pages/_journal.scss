@@ -1,0 +1,252 @@
+.journal-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* Жидкое стекло для панели селекторов */
+  &__selectors-bar {
+    @include liquid-glass('liquid-glass-card', var(--radius-xl));
+    padding: 22px 26px;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  &__selector-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 200px;
+    flex: 1;
+
+    label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--white-50);
+    }
+
+    select {
+      width: 100%;
+      padding: 11px 16px;
+      background: rgba(13, 14, 23, 0.6);
+      border: 1px solid var(--grey-border);
+      border-radius: var(--radius-md);
+      color: var(--white-100);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.25s;
+
+      &:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 16px var(--accent-glow);
+        background: rgba(13, 14, 23, 0.85);
+      }
+    }
+  }
+
+  &__meta-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 22px;
+    @include liquid-glass('liquid-glass-subtle', var(--radius-lg));
+    font-size: 13px;
+    color: var(--white-80);
+    flex-wrap: wrap;
+    gap: 12px;
+    border-color: rgba(101, 64, 251, 0.3);
+
+    strong {
+      color: var(--white-100);
+    }
+  }
+
+  /* Жидкое стекло для таблицы журнала */
+  &__table-wrapper {
+    @include liquid-glass('liquid-glass-card', var(--radius-xl));
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-gutter: stable;
+    box-shadow: 
+      inset 2px 2px 0px -2px rgba(255, 255, 255, 0.2),
+      inset 0 0 2px 0.5px rgba(255, 255, 255, 0.1),
+      0 16px 45px rgba(0, 0, 0, 0.5);
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    text-align: center;
+
+    th {
+      padding: 14px 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+      border-right: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--white-60);
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+
+      &:nth-child(2) {
+        text-align: left;
+        min-width: 200px;
+      }
+    }
+
+    td {
+      padding: 8px 6px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      border-right: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--white-90);
+      vertical-align: middle;
+      position: relative;
+
+      &:nth-child(2) {
+        text-align: left;
+        padding-left: 14px;
+      }
+    }
+
+    tbody tr:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+  }
+
+  /* In-place ячейки без деформирующего масштабирования и внешних свечений */
+  &__cell {
+    min-width: 52px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 13px;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    user-select: none;
+    margin: 0 auto;
+
+    /* Строго INSET подсветка - никогда не выходит за пределы ячейки и не вызывает скроллы */
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--white-100);
+      border-color: var(--accent);
+      box-shadow: inset 0 0 0 1px var(--accent), inset 0 0 10px var(--accent-glow);
+    }
+
+    &--empty {
+      color: var(--white-30);
+    }
+
+    &--saving {
+      background: rgba(101, 64, 251, 0.3) !important;
+    }
+
+    &--saved {
+      animation: cell-saved-glow 1.2s ease-out;
+    }
+
+    &--score-5 {
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.12);
+    }
+
+    &--score-4 {
+      color: #60a5fa;
+      background: rgba(59, 130, 246, 0.12);
+    }
+
+    &--score-3 {
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.12);
+    }
+
+    &--score-2 {
+      color: #f87171;
+      background: rgba(239, 68, 68, 0.18);
+      border-color: rgba(239, 68, 68, 0.35);
+    }
+
+    &--pass {
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.12);
+    }
+
+    &--fail {
+      color: #f87171;
+      background: rgba(239, 68, 68, 0.18);
+      border-color: rgba(239, 68, 68, 0.35);
+    }
+  }
+
+  &__cell-input {
+    width: 48px;
+    height: 32px;
+    text-align: center;
+    background: rgba(13, 14, 23, 0.95);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius-sm);
+    color: var(--white-100);
+    font-weight: 800;
+    font-size: 13px;
+    box-shadow: 0 0 15px var(--accent-glow);
+  }
+
+  &__cell-select {
+    width: 64px;
+    height: 32px;
+    text-align: center;
+    background: rgba(13, 14, 23, 0.95);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius-sm);
+    color: var(--white-100);
+    font-weight: 800;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  &__legend {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    @include liquid-glass('liquid-glass-subtle', var(--radius-md));
+    font-size: 12px;
+    color: var(--white-60);
+    flex-wrap: wrap;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+  }
+}
+
+@keyframes cell-saved-glow {
+  0% {
+    background: rgba(16, 185, 129, 0.45);
+    box-shadow: inset 0 0 14px var(--success-glow);
+  }
+  100% {
+    background: transparent;
+    box-shadow: none;
+  }
+}

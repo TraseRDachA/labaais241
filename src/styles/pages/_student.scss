@@ -1,0 +1,153 @@
+.student-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  /* Карточка профиля в стиле жидкого стекла */
+  &__profile-card {
+    @include liquid-glass('liquid-glass-card', var(--radius-xl));
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    box-shadow: 
+      inset 2px 2px 0px -2px rgba(255, 255, 255, 0.3),
+      inset 0 0 3px 1px rgba(255, 255, 255, 0.15),
+      0 16px 40px rgba(0, 0, 0, 0.5),
+      0 0 35px rgba(101, 64, 251, 0.15);
+  }
+
+  &__profile-main {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+
+  &__avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--card-back);
+    border: 3px solid var(--accent);
+    box-shadow: 0 0 25px var(--accent-glow);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__name {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--white-100);
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--white-60);
+    flex-wrap: wrap;
+
+    strong {
+      color: var(--white-90);
+    }
+  }
+
+  &__stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  /* Виджеты метрик в стиле жидкого стекла */
+  &__stat-card {
+    @include liquid-glass('liquid-glass-subtle', var(--radius-lg));
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
+
+    &:hover {
+      border-color: rgba(101, 64, 251, 0.6);
+      box-shadow: 
+        inset 2px 2px 0px -2px rgba(255, 255, 255, 0.35),
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        0 0 14px var(--accent-glow);
+    }
+
+    &-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(101, 64, 251, 0.18);
+      color: var(--accent-light);
+      flex-shrink: 0;
+
+      &--warning {
+        background: rgba(245, 158, 11, 0.18);
+        color: var(--warning);
+      }
+
+      &--danger {
+        background: rgba(239, 68, 68, 0.18);
+        color: var(--danger);
+      }
+
+      &--success {
+        background: rgba(16, 185, 129, 0.18);
+        color: var(--success);
+      }
+    }
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    &-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--white-100);
+      line-height: 1;
+
+      &--accent {
+        color: var(--accent-light);
+        text-shadow: 0 0 20px var(--accent-glow);
+      }
+
+      &--danger {
+        color: var(--danger);
+        text-shadow: 0 0 20px var(--danger-glow);
+      }
+    }
+
+    &-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--white-50);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  &__table-card {
+    @include liquid-glass('liquid-glass-card', var(--radius-xl));
+    padding: 24px;
+    box-shadow: 
+      inset 2px 2px 0px -2px rgba(255, 255, 255, 0.25),
+      0 16px 40px rgba(0, 0, 0, 0.5);
+  }
+}

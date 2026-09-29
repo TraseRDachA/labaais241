@@ -1,0 +1,82 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+
+  &--admin {
+    background: rgba(210, 64, 251, 0.15);
+    color: #e879f9;
+    border: 1px solid rgba(210, 64, 251, 0.4);
+  }
+
+  &--dean {
+    background: rgba(101, 64, 251, 0.15);
+    color: #a78bfa;
+    border: 1px solid rgba(101, 64, 251, 0.4);
+  }
+
+  &--teacher {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.4);
+  }
+
+  &--student {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+  }
+
+  /* Статусы студентов */
+  &--status-active {
+    background: var(--success-bg);
+    color: var(--success);
+    border: 1px solid var(--success-glow);
+  }
+
+  &--status-sabbatical {
+    background: var(--warning-bg);
+    color: var(--warning);
+    border: 1px solid var(--warning-glow);
+  }
+
+  &--status-expelled {
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: 1px solid var(--danger-glow);
+  }
+
+  /* Допуски */
+  &--admitted {
+    background: var(--success-bg);
+    color: var(--success);
+  }
+
+  &--not-admitted {
+    background: var(--danger-bg);
+    color: var(--danger);
+  }
+
+  /* Задолженность */
+  &--debt {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    font-weight: 700;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.25);
+  }
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+}
