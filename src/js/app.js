@@ -1,4 +1,5 @@
 import { authApi } from './api/auth.api.js';
+import { USE_MOCK } from './api/client.js';
 import { toast } from './components/toast.js';
 import { ambientOrbs } from './components/ambientOrbs.js';
 import { themeManager } from './components/theme.js';
@@ -285,8 +286,8 @@ class App {
 
       <div class="app-sidebar__footer">
         <div class="app-sidebar__status">
-          <div class="app-sidebar__status-dot"></div>
-          <span>MOCK API активен (200ms)</span>
+          <div class="app-sidebar__status-dot" style="${!USE_MOCK ? 'background: #00e676; box-shadow: 0 0 10px rgba(0, 230, 118, 0.6);' : ''}"></div>
+          <span>${USE_MOCK ? 'MOCK API активен (200ms)' : 'Express API активен (:5000)'}</span>
         </div>
       </div>
     `;

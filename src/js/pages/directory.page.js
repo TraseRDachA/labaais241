@@ -169,6 +169,7 @@ export function renderDirectoryPage({ user }) {
   async function renderGroupsTab(tableContainer) {
     const res = await studentsApi.getGroups();
     const groups = res.data || [];
+    cachedGroups = groups;
 
     dataTable = new DataTable({
       container: tableContainer,

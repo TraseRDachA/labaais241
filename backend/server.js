@@ -18,20 +18,14 @@ const PORT = 5000;
 
 app.use(cors());
 app.use(express.json());
-app.use(cors());
-app.use(express.json());
-
 
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
 });
 
-
 app.use(attachUser); 
 
-app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/students', studentsRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/students', studentsRouter);
 app.use('/api/v1/groups', groupsRouter);
@@ -41,12 +35,6 @@ app.use('/api/v1/grades', gradesRouter);
 app.use('/api/v1/student', studentPerformanceRouter);
 app.use('/api/v1/reports', reportsRouter);
 app.use('/api/v1/admin', adminRouter);
-
-// отладка
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
-});
 
 // хпчек
 app.get('/api/v1/health', (req, res) => {
@@ -74,6 +62,16 @@ app.use((req, res) => {
     data: null,
     errors: ['Маршрут не найден'],
     message: `Не найдено: ${req.method} ${req.originalUrl}`
+  });
+});
+
+app.use((err, req, res, next) => {
+  console.error('[server error]', err);
+  res.status(500).json({
+    success: false,
+    data: null,
+    errors: [err.message || 'Внутренняя ошибка сервера'],
+    message: err.message || 'Внутренняя ошибка сервера'
   });
 });
 

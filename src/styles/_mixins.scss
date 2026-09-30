@@ -10,18 +10,17 @@
   }
 }
 
-/* Фирменный эффект "Жидкое стекло" (Liquid Glass) из Roblox-master */
 @mixin liquid-glass($filterId: 'liquid-glass-card', $radius: 20px) {
   position: relative;
   background-color: rgba(255, 255, 255, 0.015);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: $radius;
-  box-shadow: 
+  box-shadow:
     inset 2px 2px 0px -2px rgba(255, 255, 255, 0.25),
     inset 0 0 2px 0.5px rgba(255, 255, 255, 0.15),
     0 16px 40px rgba(0, 0, 0, 0.5);
 
-  /* Граничное свечение стекла (строго inset: 0 для предотвращения переполнения и скроллов) */
+
   &::before {
     content: "";
     position: absolute;
@@ -32,27 +31,22 @@
     box-shadow: 0 0 4px 0.5px rgba(255, 255, 255, 0.08);
     pointer-events: none;
 
-    -webkit-mask: linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.6) 10%,
-      rgba(0, 0, 0, 0) 20%,
-      rgba(0, 0, 0, 0) 80%,
-      rgba(0, 0, 0, 0.6) 90%,
-      rgba(0, 0, 0, 1) 100%
-    );
-    mask: linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.6) 10%,
-      rgba(0, 0, 0, 0) 20%,
-      rgba(0, 0, 0, 0) 80%,
-      rgba(0, 0, 0, 0.6) 90%,
-      rgba(0, 0, 0, 1) 100%
-    );
+    -webkit-mask: linear-gradient(90deg,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.6) 10%,
+        rgba(0, 0, 0, 0) 20%,
+        rgba(0, 0, 0, 0) 80%,
+        rgba(0, 0, 0, 0.6) 90%,
+        rgba(0, 0, 0, 1) 100%);
+    mask: linear-gradient(90deg,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.6) 10%,
+        rgba(0, 0, 0, 0) 20%,
+        rgba(0, 0, 0, 0) 80%,
+        rgba(0, 0, 0, 0.6) 90%,
+        rgba(0, 0, 0, 1) 100%);
   }
 
-  /* Слой преломления света и размытия Liquid Glass */
   &::after {
     content: "";
     position: absolute;
@@ -68,14 +62,12 @@
 }
 
 @mixin cyberpunk-cut($size: 10px) {
-  clip-path: polygon(
-    #{$size} 0,
+  clip-path: polygon(#{$size} 0,
     100% 0,
     100% calc(100% - #{$size}),
     calc(100% - #{$size}) 100%,
     0 100%,
-    0 #{$size}
-  );
+    0 #{$size});
 }
 
 @mixin glow-accent() {

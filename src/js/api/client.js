@@ -1,7 +1,9 @@
 import { initialMockData } from './mockData.js';
 
 export const USE_MOCK = false;
-const API_BASE_URL = 'http://localhost:5000/api/v1';
+const API_BASE_URL = typeof window !== 'undefined' && (window.location.port === '3000' || window.location.pathname.startsWith('/api'))
+  ? '/api/v1'
+  : 'http://localhost:5000/api/v1';
 const DB_STORAGE_KEY = 'student_portal_db_v2';
 const AUTH_TOKEN_KEY = 'student_portal_token';
 const AUTH_USER_KEY = 'student_portal_user';
@@ -131,28 +133,53 @@ export function setCurrentUser(user) {
   }
 }
 
+async function request(endpoint, options = {}) {
+  const token = getAuthToken();
+  const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
+  let response;
+  try {
+    response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      ...options,
+      headers
+    });
+  } catch (err) {
+    if (err.message?.includes('Failed to fetch') || err.message?.includes('NetworkError') || err.message?.includes('fetch failed')) {
+      throw new Error('Бэкенд недоступен (порт 5000). Запустите сервер: npm run server');
+    }
+    throw err;
+  }
+
+  if (response.status === 401) {
+    setAuthToken(null);
+    setCurrentUser(null);
+    if (window.location.hash !== '#/login') {
+      window.location.hash = '#/login';
+    }
+    throw new Error('Сессия завершена или недействительна. Пожалуйста, выполните вход.');
+  }
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || `Ошибка сервера: ${response.status}`);
+  }
+
+  return await response.json();
+}
+
 export const apiClient = {
   async get(endpoint, mockHandler) {
     if (USE_MOCK) {
       await delay(150);
       try {
-        const result = mockHandler(getMockDb());
+        const result = mockHandler ? mockHandler(getMockDb()) : null;
         return { success: true, data: result, errors: [], message: null };
       } catch (err) {
         return { success: false, data: null, errors: [err.message], message: err.message };
       }
     }
-
-    const token = getAuthToken();
-    const headers = { 'Content-Type': 'application/json' };
-    if (token) headers['Authorization'] = `Bearer ${token}`;
-
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, { method: 'GET', headers });
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `Ошибка сервера: ${response.status}`);
-    }
-    return await response.json();
+    return request(endpoint, { method: 'GET' });
   },
 
   async post(endpoint, body, mockHandler) {
@@ -160,28 +187,17 @@ export const apiClient = {
       await delay(180);
       try {
         const db = getMockDb();
-        const result = mockHandler(db, body);
+        const result = mockHandler ? mockHandler(db, body) : body;
         saveMockDb(db);
         return { success: true, data: result, errors: [], message: null };
       } catch (err) {
         return { success: false, data: null, errors: [err.message], message: err.message };
       }
     }
-
-    const token = getAuthToken();
-    const headers = { 'Content-Type': 'application/json' };
-    if (token) headers['Authorization'] = `Bearer ${token}`;
-
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    return request(endpoint, {
       method: 'POST',
-      headers,
       body: JSON.stringify(body)
     });
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `Ошибка сервера: ${response.status}`);
-    }
-    return await response.json();
   },
 
   async put(endpoint, body, mockHandler) {
@@ -189,28 +205,17 @@ export const apiClient = {
       await delay(180);
       try {
         const db = getMockDb();
-        const result = mockHandler(db, body);
+        const result = mockHandler ? mockHandler(db, body) : body;
         saveMockDb(db);
         return { success: true, data: result, errors: [], message: null };
       } catch (err) {
         return { success: false, data: null, errors: [err.message], message: err.message };
       }
     }
-
-    const token = getAuthToken();
-    const headers = { 'Content-Type': 'application/json' };
-    if (token) headers['Authorization'] = `Bearer ${token}`;
-
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    return request(endpoint, {
       method: 'PUT',
-      headers,
       body: JSON.stringify(body)
     });
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `Ошибка сервера: ${response.status}`);
-    }
-    return await response.json();
   },
 
   async delete(endpoint, mockHandler) {
@@ -218,23 +223,13 @@ export const apiClient = {
       await delay(150);
       try {
         const db = getMockDb();
-        const result = mockHandler(db);
+        const result = mockHandler ? mockHandler(db) : { success: true };
         saveMockDb(db);
         return { success: true, data: result, errors: [], message: null };
       } catch (err) {
         return { success: false, data: null, errors: [err.message], message: err.message };
       }
     }
-
-    const token = getAuthToken();
-    const headers = { 'Content-Type': 'application/json' };
-    if (token) headers['Authorization'] = `Bearer ${token}`;
-
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, { method: 'DELETE', headers });
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `Ошибка сервера: ${response.status}`);
-    }
-    return await response.json();
+    return request(endpoint, { method: 'DELETE' });
   }
 };

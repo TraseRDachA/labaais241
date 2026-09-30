@@ -1,6 +1,27 @@
-@import "./variables";
-@import "./mixins";
-@import "./reset";
+@use "./variables";
+@use "./mixins" as *;
+@use "./reset";
+
+/* Компоненты */
+@use "./components/button";
+@use "./components/badges";
+@use "./components/header";
+@use "./components/sidebar";
+@use "./components/datatable";
+@use "./components/modal";
+@use "./components/toast";
+@use "./components/forms";
+
+/* Страницы */
+@use "./pages/login";
+@use "./pages/directory";
+@use "./pages/journal";
+@use "./pages/student";
+@use "./pages/reports";
+@use "./pages/admin";
+
+/* Темы оформления (Светлая / Темная) */
+@use "./themes";
 
 /* Общий Layout приложения */
 .app-layout {
@@ -53,24 +74,3 @@
     transform: translateY(0);
   }
 }
-
-/* Компоненты */
-@import "./components/button";
-@import "./components/badges";
-@import "./components/header";
-@import "./components/sidebar";
-@import "./components/datatable";
-@import "./components/modal";
-@import "./components/toast";
-@import "./components/forms";
-
-/* Страницы */
-@import "./pages/login";
-@import "./pages/directory";
-@import "./pages/journal";
-@import "./pages/student";
-@import "./pages/reports";
-@import "./pages/admin";
-
-/* Темы оформления (Светлая / Темная) */
-@import "./themes";

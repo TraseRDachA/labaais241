@@ -1,3 +1,5 @@
+@use '../mixins' as *;
+
 .reports-page {
   display: flex;
   flex-direction: column;

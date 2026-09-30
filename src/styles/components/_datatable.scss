@@ -1,3 +1,5 @@
+@use '../mixins' as *;
+
 .datatable {
   display: flex;
   flex-direction: column;

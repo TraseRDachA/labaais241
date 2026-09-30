@@ -41,6 +41,7 @@ export function renderStudentPage({ user }) {
           <option value="5" selected>5 семестр</option>
           <option value="6">6 семестр</option>
           <option value="7">7 семестр</option>
+          <option value="8">8 семестр</option>
         </select>
       </div>
     </div>

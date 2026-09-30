@@ -1,3 +1,5 @@
+@use '../mixins' as *;
+
 .student-page {
   display: flex;
   flex-direction: column;

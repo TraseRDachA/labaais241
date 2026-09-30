@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "node backend/server.js",
+    "server:dev": "node --watch backend/server.js",
+    "seed": "node backend/seed.js",
+    "add:grades": "node backend/addMoreGrades.js"
   },
   "devDependencies": {
     "sass": "^1.83.4",

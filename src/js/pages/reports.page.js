@@ -1,6 +1,7 @@
 import { studentsApi } from '../api/students.api.js';
 import { reportsApi } from '../api/reports.api.js';
 import { toast } from '../components/toast.js';
+import { USE_MOCK } from '../api/client.js';
 
 export function renderReportsPage({ user }) {
   const container = document.createElement('div');
@@ -402,6 +403,11 @@ export function renderReportsPage({ user }) {
     }
 
     if (reportType === 'subject') {
+      if (!USE_MOCK) {
+        window.location.href = `/api/v1/reports/export/subject?semester=${selectedSemester}&groupId=${selectedGroupId}&disciplineId=${selectedDisciplineId}`;
+        toast.success('Экспорт выполнен', 'Ведомость скачивается с сервера в формате Excel (.csv)');
+        return;
+      }
       const headers = ['№', 'ФИО Студента', 'Номер зачетки', 'Лаб 1', 'Лаб 2', 'Лаб 3', 'Лаб 4', 'КР', 'Курсовая', 'Аттестация', 'Итоговый балл', 'Допуск'];
       const rows = currentReportData.rows.map(r => [
         r.num, r.studentName, r.studentCard, r.lab1, r.lab2, r.lab3, r.lab4, r.test, r.cw, r.exam, r.finalScore, r.isAdmitted
@@ -409,6 +415,11 @@ export function renderReportsPage({ user }) {
       reportsApi.exportToCsv(`Ведомость_${currentReportData.groupCode}_${currentReportData.disciplineName}`, headers, rows);
       toast.success('Экспорт выполнен', 'Файл ведомости сохранен в формате CSV/Excel');
     } else if (reportType === 'debtors') {
+      if (!USE_MOCK) {
+        window.location.href = '/api/v1/reports/export/debtors';
+        toast.success('Экспорт выполнен', 'Список должников скачивается с сервера в формате Excel (.csv)');
+        return;
+      }
       const headers = ['№', 'ФИО Студента', 'Группа', 'Зачетка', 'Статус', 'Телефон', 'Задолженности'];
       const rows = currentReportData.map((d, i) => [
         i + 1, d.fullName, d.groupCode, d.studentCard, d.status, d.phone, d.debts.map(x => `${x.disciplineName} (${x.reason})`).join(', ')

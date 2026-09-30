@@ -127,3 +127,21 @@ authRouter.post('/demo-login', (req, res) => {
     message: null
   });
 });
+
+authRouter.get('/me', (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({
+      success: false,
+      data: null,
+      errors: ['Не авторизован'],
+      message: 'Сессия не найдена или токен недействителен'
+    });
+  }
+
+  return res.json({
+    success: true,
+    data: { user: req.user },
+    errors: [],
+    message: null
+  });
+});
