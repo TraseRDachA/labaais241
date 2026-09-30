@@ -2,13 +2,10 @@ import { apiClient, setAuthToken, setCurrentUser, getCurrentUser, logAuditAction
 import { initialMockData } from './mockData.js';
 
 export const authApi = {
-  // Авторизация по логину и паролю
   async login(username, password) {
-    return apiClient.post('/auth/login', { username, password }, (db) => {
+    const res = await apiClient.post('/auth/login', { username, password }, (db) => {
       const uname = (username || '').trim().toLowerCase();
       let user = db.users.find(u => u.username && u.username.toLowerCase() === uname);
-      
-      // Если пользователя нет в измененной БД, ищем в эталонных
       if (!user) {
         user = initialMockData.users.find(u => u.username.toLowerCase() === uname);
         if (user) {
@@ -29,19 +26,24 @@ export const authApi = {
       logAuditAction('Авторизация', `Вход пользователя ${user.fullName} (${user.roleName})`);
       return { token, user };
     });
+
+    if (res && res.success && res.data && res.data.token && res.data.user) {
+      setAuthToken(res.data.token);
+      setCurrentUser(res.data.user);
+    }
+
+    return res;
   },
 
-  // Мгновенный демо-вход под ролью (декан, преподаватель, студент, админ)
   async loginAsRole(role) {
-    return apiClient.post('/auth/demo-login', { role }, (db) => {
+    const res = await apiClient.post('/auth/demo-login', { role }, (db) => {
       const targetRole = (role || '').trim().toLowerCase();
       if (!Array.isArray(db.users)) {
         db.users = JSON.parse(JSON.stringify(initialMockData.users));
       }
 
       let user = db.users.find(u => u.role && u.role.toLowerCase() === targetRole);
-      
-      // Защита от повреждения данных: берем из эталонных моков если нужно
+
       if (!user) {
         const fallbackUser = initialMockData.users.find(u => u.role.toLowerCase() === targetRole);
         if (fallbackUser) {
@@ -60,9 +62,15 @@ export const authApi = {
       logAuditAction('Быстрый вход', `Демо-вход в роли ${user.roleName || user.role}`);
       return { token, user };
     });
+
+    if (res && res.success && res.data && res.data.token && res.data.user) {
+      setAuthToken(res.data.token);
+      setCurrentUser(res.data.user);
+    }
+
+    return res;
   },
 
-  // Выход из системы
   async logout() {
     try {
       const user = getCurrentUser();
@@ -70,14 +78,13 @@ export const authApi = {
         logAuditAction('Выход', `Выход пользователя ${user.fullName}`);
       }
     } catch {
-      // Игнорируем ошибки при логауте
     }
     setAuthToken(null);
     setCurrentUser(null);
     return { success: true };
   },
 
-  // Получение текущего пользователя
+
   getUser() {
     return getCurrentUser();
   }

@@ -1,12 +1,11 @@
 import { initialMockData } from './mockData.js';
 
-export const USE_MOCK = true;
+export const USE_MOCK = false;
 const API_BASE_URL = 'http://localhost:5000/api/v1';
 const DB_STORAGE_KEY = 'student_portal_db_v2';
 const AUTH_TOKEN_KEY = 'student_portal_token';
 const AUTH_USER_KEY = 'student_portal_user';
 
-// Инициализация и валидация целостности локального хранилища
 function initMockDb() {
   const existing = localStorage.getItem(DB_STORAGE_KEY);
   let db = null;
@@ -18,14 +17,12 @@ function initMockDb() {
     }
   }
 
-  // Если БД нет или повреждена — берем эталонную структуру
   if (!db || typeof db !== 'object') {
     db = JSON.parse(JSON.stringify(initialMockData));
     localStorage.setItem(DB_STORAGE_KEY, JSON.stringify(db));
     return db;
   }
 
-  // Гарантируем наличие всех сущностей
   let modified = false;
   if (!Array.isArray(db.users) || db.users.length < 4) {
     db.users = JSON.parse(JSON.stringify(initialMockData.users));
@@ -104,7 +101,6 @@ export function logAuditAction(action, details) {
   }
 }
 
-// Работа с токенами и пользователем
 export function getAuthToken() {
   return localStorage.getItem(AUTH_TOKEN_KEY);
 }
@@ -135,7 +131,6 @@ export function setCurrentUser(user) {
   }
 }
 
-// Универсальный клиент с поддержкой USE_MOCK и реального fetch к ASP.NET Core Web API
 export const apiClient = {
   async get(endpoint, mockHandler) {
     if (USE_MOCK) {

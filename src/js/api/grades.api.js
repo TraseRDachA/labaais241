@@ -1,6 +1,5 @@
 import { apiClient, logAuditAction } from './client.js';
 
-// Вычисление среднего балла и статуса допуска
 export function calculateStudentStats(entry, controlType = "Экзамен") {
   const isCredit = controlType === "Зачет";
   const scores = [];
@@ -39,19 +38,16 @@ export function calculateStudentStats(entry, controlType = "Экзамен") {
 }
 
 export const gradesApi = {
-  // Получение матрицы журнала для связки (семестр, группа, дисциплина)
   async getJournalGrades(semester, groupId, disciplineId) {
     return apiClient.get(`/grades?semester=${semester}&groupId=${groupId}&disciplineId=${disciplineId}`, (db) => {
       const key = `${semester}_${groupId}_${disciplineId}`;
       let groupGrades = db.grades[key];
 
-      // Получаем всех студентов этой группы
       const groupStudents = db.students.filter(s => s.groupId === groupId);
       const discipline = db.disciplines.find(d => d.id === disciplineId);
       const controlType = discipline ? discipline.controlType : "Экзамен";
 
       if (!groupGrades) {
-        // Создаем пустые/базовые записи для всех студентов группы
         groupGrades = groupStudents.map(st => {
           const entry = {
             studentId: st.id,
@@ -63,7 +59,6 @@ export const gradesApi = {
         });
         db.grades[key] = groupGrades;
       } else {
-        // Убедимся, что новые студенты тоже включены в матрицу
         groupStudents.forEach(st => {
           if (!groupGrades.some(g => g.studentId === st.id)) {
             groupGrades.push({
@@ -76,7 +71,6 @@ export const gradesApi = {
         });
       }
 
-      // Обогащаем данными студентов
       return groupGrades.map(grade => {
         const student = groupStudents.find(s => s.id === grade.studentId) || {
           fullName: "Неизвестный студент",
@@ -96,7 +90,6 @@ export const gradesApi = {
     });
   },
 
-  // Обновление оценки (in-place)
   async updateGrade(semester, groupId, disciplineId, studentId, field, value) {
     return apiClient.put('/grades/cell', { semester, groupId, disciplineId, studentId, field, value }, (db) => {
       const key = `${semester}_${groupId}_${disciplineId}`;
@@ -125,13 +118,11 @@ export const gradesApi = {
     });
   },
 
-  // Данные успеваемости для личного кабинета студента
   async getStudentPerformance(studentId, semester = 5) {
     return apiClient.get(`/student/${studentId}/performance?semester=${semester}`, (db) => {
       const student = db.students.find(s => s.id === studentId) || db.students[0];
       if (!student) throw new Error('Студент не найден');
 
-      // Рейтинг в группе
       const groupStudents = db.students
         .filter(s => s.groupId === student.groupId && s.status === 'Учится')
         .sort((a, b) => (b.gpa || 0) - (a.gpa || 0));
@@ -139,7 +130,6 @@ export const gradesApi = {
       const rankIndex = groupStudents.findIndex(s => s.id === student.id);
       const rank = rankIndex !== -1 ? `${rankIndex + 1} из ${groupStudents.length}` : `1 из ${groupStudents.length}`;
 
-      // Предметы за семестр
       const semesterDisciplines = db.disciplines.filter(d => Number(d.semester) === Number(semester));
 
       const subjects = semesterDisciplines.map(disc => {
@@ -152,7 +142,6 @@ export const gradesApi = {
         const stats = calculateStudentStats(gradeEntry, disc.controlType);
         const teacher = db.teachers.find(t => t.id === disc.teacherId);
 
-        // Проверка на долг (оценка 2 или Незачет, либо незакрытый экзамен)
         const isDebt = gradeEntry.exam === 2 || 
                        gradeEntry.exam === "2" || 
                        gradeEntry.exam === "Незач" || 
@@ -174,7 +163,6 @@ export const gradesApi = {
         };
       });
 
-      // Подсчет среднего балла по заполненным предметам
       const ratedSubjects = subjects.filter(s => s.finalScore > 0);
       const currentGpa = ratedSubjects.length > 0 
         ? (ratedSubjects.reduce((acc, curr) => acc + curr.finalScore, 0) / ratedSubjects.length).toFixed(2)

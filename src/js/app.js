@@ -9,7 +9,6 @@ import { renderStudentPage } from './pages/student.page.js';
 import { renderReportsPage } from './pages/reports.page.js';
 import { renderAdminPage } from './pages/admin.page.js';
 
-// Ролевая модель доступа к маршрутам
 const ROLE_PERMISSIONS = {
   admin: ['/directory', '/journal', '/student', '/reports', '/admin'],
   dean: ['/directory', '/journal', '/reports'],
@@ -30,16 +29,12 @@ class App {
   }
 
   init() {
-    // 1. Запуск физики DVD-сфер на фоне
     ambientOrbs.init();
 
-    // 2. Применение темы оформления
     themeManager.applyTheme(themeManager.getTheme());
 
-    // 3. Получение текущего пользователя
     this.currentUser = authApi.getUser();
     
-    // Если пользователь не залогинен, перенаправляем на /login
     if (!this.currentUser) {
       if (window.location.hash !== '#/login') {
         window.location.hash = '#/login';
@@ -69,13 +64,11 @@ class App {
       return;
     }
 
-    // Если авторизован и идет на /login -> редиректим на дефолтный экран роли
     if (this.currentUser && path === '/login') {
       this.navigate(this.getDefaultRouteForRole(this.currentUser.role));
       return;
     }
 
-    // Проверка RBAC прав доступа к маршруту
     if (this.currentUser && path !== '/login') {
       const allowedRoutes = ROLE_PERMISSIONS[this.currentUser.role] || [];
       if (!allowedRoutes.includes(path)) {
@@ -119,15 +112,12 @@ class App {
       return;
     }
 
-    // Главный Layout приложения
     const layout = document.createElement('div');
     layout.className = 'app-layout';
 
-    // 1. Header
     const header = this.createHeader();
     layout.appendChild(header);
 
-    // 2. Body (Sidebar + Main Content)
     const body = document.createElement('div');
     body.className = 'app-body';
 
@@ -322,7 +312,6 @@ class App {
   }
 }
 
-// Запуск приложения
 const app = new App();
 document.addEventListener('DOMContentLoaded', () => {
   app.init();
